@@ -1,22 +1,24 @@
-const express = require('express');
-const cors = require('cors');
+const { env, port } = require('./core/config');
+const logger = require('./core/logger')('app');
+const server = require('./core/server');
 
-const app = express();
-const PORT = 3000;
-
-// Middleware (agar server bisa membaca input JSON)
-app.use(cors());
-app.use(express.json());
-
-// Endpoint dasar untuk ngetes server
-app.get('/', (req, res) => {
-    res.json({ 
-        status: "success",
-        message: "Halo, Server Kelompok Kami Sudah Jalan!" 
-    });
+const app = server.listen(port, (err) => {
+  if (err) {
+    logger.fatal(err, 'Failed to start the server.');
+    process.exit(1);
+  } else {
+    logger.info(`Server runs at port ${port} in ${env} environment`);
+  }
 });
 
-// Menyalakan server
-app.listen(PORT, () => {
-    console.log(`Server berjalan di http://localhost:${PORT}`);
+process.on('uncaughtException', (err) => {
+  logger.fatal(err, 'Uncaught exception.');
+
+  // Shutdown the server gracefully
+  app.close(() => process.exit(1));
+
+  // If a graceful shutdown is not achieved after 1 second,
+  // shut down the process completely
+  setTimeout(() => process.abort(), 1000).unref();
+  process.exit(1);
 });
