@@ -1,4 +1,5 @@
 const skpiService = require('../services/skpi-service');
+const { errorResponder, errorTypes } = require('../../../core/errors');
 
 class SkpiController {
     async tambahKegiatan(req, res) {

@@ -10,8 +10,8 @@ const tambahKegiatan = async (data) => {
         data.klasifikasi = "Peserta";
     } else if (inputPeran === "panitia") {
         data.klasifikasi = "Panitia";
-    } else if (inputPeran === "ketua pelaksana") {
-        data.klasifikasi = "Ketua Pelaksana";
+    } else if (inputPeran === "BPHI") {
+        data.klasifikasi = "BPHI";
     } else {
         throw new Error('Klasifikasi tidak valid! Harap pilih: Peserta, Panitia, atau Ketua Pelaksana.');
     }
@@ -19,7 +19,7 @@ const tambahKegiatan = async (data) => {
     const standarPoin = {
         "Peserta": 15,
         "Panitia": 25,
-        "Ketua Pelaksana": 50
+        "BPHI": 50
     };
     
     data.poin = standarPoin[data.klasifikasi];

@@ -1,9 +1,14 @@
-const JadwalKuliah = require('../../../models/schema/JadwalKuliah-schema');
+const JadwalKuliah = require('../../../models/JadwalKuliah-schema');
 
-exports.cariJadwal = async (queryDatabase) => {
+async function cariJadwal(queryDatabase) {
     return await JadwalKuliah.find(queryDatabase);
-};
+}
 
-exports.tambahJadwal = async (dataBaru) => {
+async function tambahJadwal(dataBaru) {
     return await JadwalKuliah.create(dataBaru);
+}
+
+module.exports = {
+    cariJadwal,
+    tambahJadwal,
 };

@@ -1,4 +1,4 @@
-const Skpi = require('../models/skpi');
+const Skpi = require('../../../models/skpi-schema');
 
 class SkpiRepository {
     async create(data) {

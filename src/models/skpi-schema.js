@@ -12,7 +12,7 @@ const skpiSchema = new mongoose.Schema({
     klasifikasi: {
         type: String,
         required: true,
-        enum: ['Peserta', 'Panitia', 'Ketua Pelaksana'] 
+        enum: ['Peserta', 'Panitia', 'BPHI'] 
     },
     tanggalInput: {
         type: Date,
