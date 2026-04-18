@@ -10,11 +10,8 @@ exports.postJadwal = async (req, res) => {
 };
 
 exports.getJadwal = async (req, res) => {
-    try {
-        // Menangkap kata kunci dari URL (?semester=Genap)
+    try {      
         const filterSemester = req.query.semester; 
-        
-        // Kirim filter tersebut ke Service
         const jadwal = await jadwalService.ambilJadwal(filterSemester);
         
         res.status(200).json({ 
