@@ -12,7 +12,6 @@ async function getJadwal(req, res, next) {
             data: jadwal 
         });
     } catch (error) {
-        // Lempar error ke server.js
         return next(error);
     }
 }

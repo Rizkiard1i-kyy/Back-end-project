@@ -1,10 +1,9 @@
 const express = require('express');
-const route = express.Router();
-const skpiController = require('../controllers/skpi-controller');
+const router = express.Router();
+const skpiController = require('./skpi-controller');
 
-module.exports = (app) => {
-    app.use('/api/skpi', route);
-    route.get('/', skpiController.getKegiatan);
-    route.post('/', skpiController.tambahKegiatan);
-    route.delete('/:id', skpiController.deleteKegiatan);
-};
+router.get('/', skpiController.getKegiatan);
+router.post('/', skpiController.tambahKegiatan);
+router.delete('/:id', skpiController.deleteKegiatan);
+
+module.exports = router;

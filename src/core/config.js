@@ -1,11 +1,11 @@
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 
 // Set the NODE_ENV to 'development' by default.
-process.env.NODE_ENV = (process.env.NODE_ENV || 'development').toLowerCase();
+process.env.NODE_ENV = (process.env.NODE_ENV || "development").toLowerCase();
 
 // Environment variables should be saved in a file named `.env` in the `./config` directory.
 // See `.env.example` for example.
-const envFound = dotenv.config({ path: '.env' });
+const envFound = dotenv.config({ path: ".env" });
 if (envFound.error) {
   throw new Error("⚠️ Couldn't find .env file ⚠️");
 }
@@ -13,7 +13,7 @@ if (envFound.error) {
 module.exports = {
   env: process.env.NODE_ENV,
   api: {
-    prefix: '/api',
+    prefix: "/api",
   },
   port: process.env.PORT || 5000,
   database: {

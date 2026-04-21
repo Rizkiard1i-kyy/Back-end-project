@@ -1,6 +1,7 @@
 const { env, port } = require('./core/config');
 const logger = require('./core/logger')('app');
 const server = require('./core/server');
+require('./models');
 
 const app = server.listen(port, (err) => {
   if (err) {
