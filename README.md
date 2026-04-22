@@ -7,3 +7,6 @@ nama & nim
 5. Rizki - 535250127
 6. josua -
 
+
+http://localhost:5000/api/jadwalkuliah
+http://localhost:5000/api/rps

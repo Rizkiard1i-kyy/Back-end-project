@@ -7,7 +7,6 @@ module.exports = () => {
   const app = express.Router();
 
   users(app);
-  auth(app);
 
   return app;
 };
