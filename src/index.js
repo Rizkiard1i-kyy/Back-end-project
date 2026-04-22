@@ -1,6 +1,8 @@
 const { env, port } = require('./core/config');
 const logger = require('./core/logger')('app');
 const server = require('./core/server');
+
+//nambah ini karena kalau ga ada, jadinya ga connect ke mongodb
 require('./models');
 
 const app = server.listen(port, (err) => {
