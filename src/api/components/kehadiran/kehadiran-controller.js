@@ -18,7 +18,7 @@ async function getKehadiran(req, res, next) {
 
 async function postKehadiran(req, res, next) {
   try {
-    const newKehadiran = req.body;
+    let newKehadiran = req.body;
     if (!newKehadiran || Object.keys(newKehadiran).length === 0) {
       throw errorResponder(
         errorTypes.EMPTY_BODY,
@@ -49,7 +49,33 @@ async function postKehadiran(req, res, next) {
   }
 }
 
-async function updateKehadiran(req, res, next) {}
+async function updateKehadiran(req, res, next) {
+  try {
+    const { kodeMatkul } = req.params;
+    const updateData = req.body;
+
+    const kehadiranTerbaru = await kehadiranService.updateKehadiran(
+      kodeMatkul,
+      updateData
+    );
+
+    if (!kehadiranTerbaru) {
+      return res.status(404).json({
+        status: 'error',
+        message:
+          'Data kehadiran tidak ditemukan. Jika anda tidak kesalahan menulis, mohon meminta admin untuk melakukan post data kehadiran baru.',
+      });
+    }
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'Pembaruan data kehadiran berhasil',
+      data: kehadiranTerbaru,
+    });
+  } catch (error) {
+    return next(error);
+  }
+}
 
 module.exports = {
   getKehadiran,

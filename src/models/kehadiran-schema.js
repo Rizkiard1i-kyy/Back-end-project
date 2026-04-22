@@ -4,7 +4,7 @@ const kehadiranSchema = new mongoose.Schema(
   {
     kodeMatkul: {
       type: String,
-      require: true,
+      required: true,
     },
     semester: {
       type: String,

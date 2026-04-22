@@ -16,14 +16,22 @@ async function postKehadiran(newKehadiran) {
   if (!newKehadiran.mataKuliah) {
     throw new Error('Nama mata kuliah wajib diisi!');
   }
-  return await kehadiranRepository.addKehadiran(newKehadiran);
+  return await kehadiranRepository.postKehadiran(newKehadiran);
 }
-/*async function updateKehadiran() {
-  return kehadiranRepository.updateKehadiran;
-} */
+async function updateKehadiran(kodeMatkul, updateData) {
+  const { jumlahPertemuan, jumlahKehadiran, persentase } = updateData;
+
+  const dataTerfilter = {
+    jumlahPertemuan,
+    jumlahKehadiran,
+    persentase,
+  };
+
+  return await kehadiranRepository.updateKehadiran(kodeMatkul, dataTerfilter);
+}
 
 module.exports = {
   getKehadiran,
   postKehadiran,
-  //updateKehadiran,
+  updateKehadiran,
 };
