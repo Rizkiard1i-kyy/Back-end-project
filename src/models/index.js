@@ -1,18 +1,19 @@
-const fs = require("fs");
-const path = require("path");
-const mongoose = require("mongoose");
+const fs = require('fs');
+const path = require('path');
+const mongoose = require('mongoose');
 
-const config = require("../core/config");
-const logger = require("../core/logger")("app");
+const config = require('../core/config');
+const logger = require('../core/logger')('app');
 
 // Join the database connection string
+//ini diganti karna pake indihome
 mongoose.connect(process.env.DB_CONNECTION, {
   dbName: process.env.DB_NAME,
 });
 
 const db = mongoose.connection;
-db.once("open", () => {
-  logger.info("Successfully connected to MongoDB");
+db.once('open', () => {
+  logger.info('Successfully connected to MongoDB');
 });
 
 const dbExports = {};
@@ -23,7 +24,7 @@ const basename = path.basename(__filename);
 fs.readdirSync(__dirname)
   .filter(
     (file) =>
-      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js",
+      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
   )
   .forEach((file) => {
     // eslint-disable-next-line import/no-dynamic-require, global-require
