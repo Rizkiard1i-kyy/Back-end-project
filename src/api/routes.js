@@ -1,13 +1,18 @@
-const express = require("express");
+const express = require('express');
 
-const books = require("./components/books/books-route");
-const users = require("./components/users/users-route");
+const users = require('./components/users/users-route');
+const auth = require('./components/auth/auth-route');
+const rps = require('./components/RPS/RPS-route');
+const skpi = require('./components/skpi/skpi-route');
+const jadwalKuliah = require('./components/akademic/JadwalKuliah/JadwalKuliah-route');
 
 module.exports = () => {
   const app = express.Router();
 
-  books(app);
   users(app);
-
+  auth(app);
+  rps(app);
+  skpi(app);
+  jadwalKuliah(app);
   return app;
 };
