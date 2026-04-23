@@ -28,16 +28,20 @@ async function postKehadiran(newKehadiran) {
 
   return await kehadiranRepository.postKehadiran(newKehadiran);
 }
-async function updateKehadiran(kodeMatkul, updateData) {
+async function updateKehadiran(kodeMatkul, emailMahasiswa, updateData) {
   const { jumlahPertemuan, jumlahKehadiran, persentase } = updateData;
 
   const dataTerfilter = {
-    jumlahPertemuan,
-    jumlahKehadiran,
-    persentase,
+    jumlahPertemuan: updateData.jumlahPertemuan,
+    jumlahKehadiran: updateData.jumlahKehadiran,
+    persentase: updateData.persentase,
   };
 
-  return await kehadiranRepository.updateKehadiran(kodeMatkul, dataTerfilter);
+  return await kehadiranRepository.updateKehadiran(
+    kodeMatkul,
+    emailMahasiswa,
+    dataTerfilter
+  );
 }
 
 async function getKehadiranSaya(email, semester) {

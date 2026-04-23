@@ -6,9 +6,9 @@ async function getKehadiran(queryDatabase) {
 async function postKehadiran(dataBaru) {
   return await Kehadiran.create(dataBaru);
 }
-async function updateKehadiran(kodeMatkul, dataUpdate) {
+async function updateKehadiran(kodeMatkul, emailMahasiswa, dataUpdate) {
   return await Kehadiran.findOneAndUpdate(
-    { kodeMatkul: kodeMatkul },
+    { kodeMatkul: kodeMatkul, emailMahasiswa: emailMahasiswa },
     { $set: dataUpdate },
     { new: true }
   );

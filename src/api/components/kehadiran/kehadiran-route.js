@@ -20,7 +20,7 @@ module.exports = (app) => {
   );
   route.post('/', requireRole('admin'), kehadiranController.postKehadiran);
   route.put(
-    '/:kodeMatkul',
+    '/:kodeMatkul/:emailMahasiswa',
     requireRole('dosen'),
     kehadiranController.updateKehadiran
   );

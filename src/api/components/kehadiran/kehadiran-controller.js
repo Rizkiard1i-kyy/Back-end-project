@@ -43,11 +43,12 @@ async function postKehadiran(req, res, next) {
 
 async function updateKehadiran(req, res, next) {
   try {
-    const { kodeMatkul } = req.params;
+    const { kodeMatkul, emailMahasiswa } = req.params;
     const updateData = req.body;
 
     const kehadiranTerbaru = await kehadiranService.updateKehadiran(
       kodeMatkul,
+      emailMahasiswa,
       updateData
     );
 
@@ -55,7 +56,7 @@ async function updateKehadiran(req, res, next) {
       return res.status(404).json({
         status: 'error',
         message:
-          'Data kehadiran tidak ditemukan. Jika anda tidak kesalahan menulis, mohon meminta admin untuk melakukan post data kehadiran baru.',
+          'Data kehadiran tidak ditemukan. Mohon periksa kembali input kode mata kuliah atau email mahasiswa.',
       });
     }
 
