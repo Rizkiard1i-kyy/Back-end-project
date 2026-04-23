@@ -1,0 +1,16 @@
+Format untuk semua pengisian post
+{
+  "nim": "",
+  "nama": "",
+  "prodi": "",
+  "bahasa": 1-5,
+  "jenis": 1-5
+}
+
+Link :
+Post localhost:5004/api/suratpermohonan
+Post localhost:5004/api/suratketerangan
+Get localhost:5004/api/suratpermohonan
+Get localhost:5004/api/suratketerangan
+
+untuk get cukup menggunakan token jwt (itu sama kaya kalian masih stay login)

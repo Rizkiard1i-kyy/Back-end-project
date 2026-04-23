@@ -16,32 +16,73 @@ const jenisMap = {
   6: 'Permohonan Visa',
 };
 
+/**
+ * CREATE SURAT PERMOHONAN
+ */
 const createsuratpermohonan = async (data) => {
-  if (!data.nim || !data.nama || !data.prodi || !data.bahasa || !data.jenis) {
-    throw new Error('Semua data wajib diisi');
+  if (!data.userId) {
+    throw errorResponder(errorTypes.UNAUTHORIZED, 'User tidak terautentikasi');
   }
-  const bahasa = bahasaMap[data.bahasa];
-  const jenis = jenisMap[data.jenis];
-  if (!bahasa) throw new Error('Bahasa tidak valid');
-  if (!jenis) throw new Error('Jenis tidak valid');
+
+  const user = await usersService.getUser(data.userId);
+
+  if (!user) {
+    throw errorResponder(
+      errorTypes.UNPROCESSABLE_ENTITY,
+      'User tidak ditemukan'
+    );
+  }
+
+  const { nim, nama, prodi, bahasa, jenis } = data;
+
+  if (!nim || !nama || !prodi || !bahasa || !jenis) {
+    throw errorResponder(errorTypes.BAD_REQUEST, 'Semua field wajib diisi');
+  }
+
+  const bahasaResult = bahasaMap[bahasa];
+  const jenisResult = jenisMap[jenis];
+
+  if (!bahasaResult) {
+    throw errorResponder(errorTypes.BAD_REQUEST, 'Bahasa tidak valid');
+  }
+
+  if (!jenisResult) {
+    throw errorResponder(errorTypes.BAD_REQUEST, 'Jenis tidak valid');
+  }
+
   const surat = {
-    nim: data.nim,
-    nama: data.nama,
-    prodi: data.prodi,
-    bahasa,
-    jenis,
-    tanggal: new Date(),
+    userId: user.id || user._id,
+    nim,
+    nama,
+    prodi,
+    bahasa: bahasaResult,
+    jenis: jenisResult,
+    createdAt: new Date(),
   };
+
   return await repository.save(surat);
 };
 
-const getallsurat = async (user) => {
-  if (user.role === 'dosen') return await repository.findAll();
-  if (user.role === 'mahasiswa') return await repository.findByNim(user.nim);
+/**
+ * GET ALL SURAT PERMOHONAN
+ */
+const getallsuratpermohonan = async (user) => {
+  if (!user) throw new Error('User tidak ditemukan');
+
+  const role = user.role || user.tokenRole;
+
+  if (role === 'dosen') {
+    return repository.findAll();
+  }
+
+  if (role === 'mahasiswa') {
+    return repository.findByNim(user.nim);
+  }
+
   throw new Error('Akses ditolak');
 };
 
 module.exports = {
   createsuratpermohonan,
-  getallsurat,
+  getallsuratpermohonan,
 };
