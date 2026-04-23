@@ -9,7 +9,5 @@ module.exports = (app) => {
 
   route.post('/login', authController.login);
 
-  route.get('/protected',
-    authMiddleware,
-    authController.testProtrected);
+  route.get('/protected', authMiddleware, authController.testProtrected);
 };
