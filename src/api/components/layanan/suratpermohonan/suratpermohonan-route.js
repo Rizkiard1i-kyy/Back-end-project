@@ -5,8 +5,8 @@ const { authMiddleware } = require('../../../middlewares/authentication');
 module.exports = (router) => {
   const route = express.Router();
 
-  route.post('/', authMiddleware, controller.createsuratpermohonan); // ← tambah authMiddleware
-  route.get('/', authMiddleware, controller.getallsuratpermohonan); // ← tambah authMiddleware
+  route.post('/', authMiddleware, controller.createsuratpermohonan);
+  route.get('/', authMiddleware, controller.getallsuratpermohonan);
 
   router.use('/suratpermohonan', route);
 };
