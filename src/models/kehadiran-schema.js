@@ -35,6 +35,10 @@ const kehadiranSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    emailMahasiswa: {
+      type: String,
+      required: true,
+    },
   },
 
   { collection: 'kehadirans' }

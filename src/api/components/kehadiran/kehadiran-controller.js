@@ -34,14 +34,6 @@ async function postKehadiran(req, res, next) {
       data: newKehadiran,
     });
   } catch (error) {
-    if (error.code === 11000) {
-      return next(
-        errorResponder(
-          errorTypes.DB_DUPLICATE_CONFLICT,
-          'Gagal: Kode Mata Kuliah duplikat'
-        )
-      );
-    }
     if (error.message.includes('wajib diisi')) {
       return next(errorResponder(errorTypes.VALIDATION, error.message));
     }
@@ -77,8 +69,27 @@ async function updateKehadiran(req, res, next) {
   }
 }
 
+async function getKehadiranSaya(req, res, next) {
+  try {
+    const emailMahasiswa = req.user.email;
+    const semester = req.query.semester;
+
+    const dataKehadiranSaya =
+      await kehadiranService.getKehadiranSaya(emailMahasiswa);
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'Data kehadiran anda berhasil diambil',
+      data: dataKehadiranSaya,
+    });
+  } catch (error) {
+    return next(error);
+  }
+}
+
 module.exports = {
   getKehadiran,
   postKehadiran,
   updateKehadiran,
+  getKehadiranSaya,
 };

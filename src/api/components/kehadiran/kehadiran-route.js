@@ -10,8 +10,13 @@ module.exports = (app) => {
 
   route.get(
     '/',
-    requireRole('dosen', 'mahasiswa', 'admin'),
+    requireRole('dosen', 'admin'),
     kehadiranController.getKehadiran
+  );
+  route.get(
+    '/kehadiransaya',
+    requireRole('mahasiswa'),
+    kehadiranController.getKehadiranSaya
   );
   route.post('/', requireRole('admin'), kehadiranController.postKehadiran);
   route.put(
