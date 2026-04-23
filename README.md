@@ -1,7 +1,8 @@
-Joseph 535250135
-Membuat endpoint untuk kehadiran dan kalender akademik
+535250128  Rizki Ardi Prabowo
+535250130 Hartono Budi
+535250133 Jhon Thimothy Junior Sihite
+535250135 Joseph Nathanael Setiajaya
+535250141 Christian Rafael Zia
+535250146 Joshua Eben
 
-http://localhost:5000/api/kehadiran (POST sebagai admin, GET sebagai admin dan dosen)
-http://localhost:5000/api/kehadiran/kehadiransaya (GET sebagai mahasiswa)
-http://localhost:5000/api/kehadiran/:kodeMatkul/:emailMahasiswa (PUT sebagai dosen)
-http://localhost:5000/api/kalender (POST sebagai admin, GET sebagai semua role)
+UTS Project Back-End Programming: Membuat endpoint untuk Lintar
