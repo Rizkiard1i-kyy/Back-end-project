@@ -16,6 +16,8 @@ const kalenderAkademik = require('./components/kalenderAkademik/kalenderAkademik
 
 const biodata = require('./components/biodata/biodata/biodata-route');
 
+const historiNilai = require('./components/akademic/historiNilai/historiNilai-route');
+
 module.exports = () => {
   const app = express.Router();
 
@@ -33,6 +35,8 @@ module.exports = () => {
   kalenderAkademik(app);
 
   biodata(app);
+
+  historiNilai(app);
 
   return app;
 };
