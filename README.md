@@ -1,12 +1,7 @@
-Kelompok 3 membahas lintar
-nama & nim
-1. hartono budi - 535250130
-2. christian rafael - 535250141
-3. joshep - 535250135
-4. jhon - 535250133
-5. Rizki - 535250127
-6. josua -
+Joseph 535250135
+Membuat endpoint untuk kehadiran dan kalender akademik
 
-
-http://localhost:5000/api/jadwalkuliah
-http://localhost:5000/api/rps
+http://localhost:5000/api/kehadiran (POST sebagai admin, GET sebagai admin dan dosen)
+http://localhost:5000/api/kehadiran/kehadiransaya (GET sebagai mahasiswa)
+http://localhost:5000/api/kehadiran/:kodeMatkul/:emailMahasiswa (PUT sebagai dosen)
+http://localhost:5000/api/kalender (POST sebagai admin, GET sebagai semua role)
