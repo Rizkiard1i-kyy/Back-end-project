@@ -1,4 +1,4 @@
-const model = require("../../../../models/suratketerangan-models");
+const model = require('../../../../models/suratketerangan-schema');
 
 const save = async (data) => {
   return model.save(data);

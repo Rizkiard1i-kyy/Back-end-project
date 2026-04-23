@@ -1,4 +1,4 @@
-const Surat = require("../../../../models/suratketerangan-models");
+const Surat = require('../../../../models/suratketerangan-models');
 
 // CREATE
 const createsuratketerangan = async (req, res) => {
@@ -7,7 +7,7 @@ const createsuratketerangan = async (req, res) => {
 
     if (!nim || !nama || !prodi || !bahasa || !jenis) {
       return res.status(400).json({
-        message: "Semua data wajib diisi",
+        message: 'Semua data wajib diisi',
       });
     }
 
@@ -20,12 +20,12 @@ const createsuratketerangan = async (req, res) => {
     });
 
     return res.status(201).json({
-      message: "Surat berhasil dibuat",
+      message: 'Surat berhasil dibuat',
       data: result,
     });
   } catch (error) {
     return res.status(500).json({
-      message: "Server error",
+      message: 'Server error',
       error: error.message,
     });
   }
@@ -37,12 +37,12 @@ const getallsuratketerangan = async (req, res) => {
     const data = await Surat.find();
 
     return res.status(200).json({
-      message: "List surat",
+      message: 'List surat',
       data,
     });
   } catch (error) {
     return res.status(500).json({
-      message: "Server error",
+      message: 'Server error',
       error: error.message,
     });
   }
