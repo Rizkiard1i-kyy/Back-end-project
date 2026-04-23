@@ -1,17 +1,19 @@
-const Surat = require('../../../../models/suratketerangan-models');
+const suratService = require('./suratketerangan-service');
+const { errorResponder, errorTypes } = require('../../../../core/errors');
 
-// CREATE
-const createsuratketerangan = async (req, res) => {
+/**
+ * CREATE SURAT KETERANGAN
+ */
+const createsuratketerangan = async (req, res, next) => {
   try {
-    const { nim, nama, prodi, bahasa, jenis } = req.body;
-
-    if (!nim || !nama || !prodi || !bahasa || !jenis) {
-      return res.status(400).json({
-        message: 'Semua data wajib diisi',
-      });
+    if (!req.user) {
+      throw errorResponder(errorTypes.UNAUTHORIZED, 'User belum login');
     }
 
-    const result = await Surat.create({
+    const { nim, nama, prodi, bahasa, jenis } = req.body;
+
+    const result = await suratService.createsuratketerangan({
+      userId: req.user.id || req.user._id,
       nim,
       nama,
       prodi,
@@ -20,31 +22,31 @@ const createsuratketerangan = async (req, res) => {
     });
 
     return res.status(201).json({
-      message: 'Surat berhasil dibuat',
+      message: 'Surat keterangan berhasil dibuat',
       data: result,
     });
   } catch (error) {
-    return res.status(500).json({
-      message: 'Server error',
-      error: error.message,
-    });
+    return next(error);
   }
 };
 
-// GET ALL
-const getallsuratketerangan = async (req, res) => {
+/**
+ * GET ALL SURAT KETERANGAN
+ */
+const getallsuratketerangan = async (req, res, next) => {
   try {
-    const data = await Surat.find();
+    if (!req.user) {
+      throw errorResponder(errorTypes.UNAUTHORIZED, 'User belum login');
+    }
+
+    const result = await suratService.getallsuratketerangan(req.user);
 
     return res.status(200).json({
-      message: 'List surat',
-      data,
+      message: 'Data surat keterangan',
+      data: result,
     });
   } catch (error) {
-    return res.status(500).json({
-      message: 'Server error',
-      error: error.message,
-    });
+    return next(error);
   }
 };
 

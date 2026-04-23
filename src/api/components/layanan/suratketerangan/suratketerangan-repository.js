@@ -1,15 +1,19 @@
-const model = require('../../../../models/suratketerangan-schema');
+const Surat = require('../../../../models/suratketerangan-schema');
 
 const save = async (data) => {
-  return model.save(data);
+  return await Surat.create(data);
 };
 
-const findall = async () => {
-  return model.findall();
+const findAll = async () => {
+  return await Surat.find();
+};
+
+const findByUserId = async (userId) => {
+  return await Surat.find({ userId });
 };
 
 module.exports = {
   save,
-  findall,
+  findAll,
+  findByUserId,
 };
-//sss

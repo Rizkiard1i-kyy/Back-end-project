@@ -1,4 +1,4 @@
-const surat = require('../../../../models/suratpermohonan-schema');
+const Surat = require('../../../../models/suratpermohonan-schema');
 
 const save = async (data) => {
   return await Surat.create(data);

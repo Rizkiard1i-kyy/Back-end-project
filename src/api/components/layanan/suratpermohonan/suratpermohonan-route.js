@@ -1,13 +1,12 @@
 const express = require('express');
-const router = express.Router();
-
 const controller = require('./suratpermohonan-controller');
-const { authMiddleware } = require('../../../../middlewares/auth');
+const { authMiddleware } = require('../../../middlewares/authentication');
 
-router.post('/', requireMahasiswa, controller.create);
+module.exports = (router) => {
+  const route = express.Router();
 
-router.get('/', requireMahasiswa, controller.getAll);
+  route.post('/', authMiddleware, controller.createsuratpermohonan); // ← tambah authMiddleware
+  route.get('/', authMiddleware, controller.getallsuratpermohonan); // ← tambah authMiddleware
 
-module.exports = (app) => {
-  app.use('/suratpermohonan', router);
+  router.use('/suratpermohonan', route);
 };

@@ -1,9 +1,12 @@
 const express = require('express');
 const controller = require('./suratketerangan-controller');
+const { authMiddleware } = require('../../../middlewares/authentication'); // tambahkan ini
 
-const router = express.Router();
+module.exports = (router) => {
+  const route = express.Router();
 
-router.post('/', requireMahasiswa, controller.createsuratketerangan);
-router.get('/', requireMahasiswa, controller.getallsuratketerangan);
+  route.post('/', authMiddleware, controller.createsuratketerangan); // ← tambah authMiddleware
+  route.get('/', authMiddleware, controller.getallsuratketerangan); // ← tambah authMiddleware
 
-module.exports = router;
+  router.use('/suratketerangan', route);
+};

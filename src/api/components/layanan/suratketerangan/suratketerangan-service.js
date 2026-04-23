@@ -1,75 +1,111 @@
 const repository = require('./suratketerangan-repository');
+const usersService = require('../../users/users-service');
+const { errorResponder, errorTypes } = require('../../../../core/errors');
 
-// mapping bahasa
-const bahasamap = {
-  1: 'indonesia',
-  2: 'inggris',
+/**
+ * Mapping Bahasa
+ */
+const bahasaMap = {
+  1: 'Indonesia',
+  2: 'Inggris',
 };
 
-// mapping jenis
-const jenismap = {
-  1: 'permohonan kerja praktik',
-  2: 'permohonan kunjungan',
-  3: 'permohonan beasiswa',
-  4: 'permohonan proposal',
-  5: 'permohonan survei',
-  6: 'permohonan visa',
+/**
+ * Mapping Jenis Surat
+ */
+const jenisMap = {
+  1: 'Permohonan Kerja Praktik',
+  2: 'Permohonan Kunjungan',
+  3: 'Permohonan Beasiswa',
+  4: 'Permohonan Proposal',
+  5: 'Permohonan Survei',
+  6: 'Permohonan Visa',
 };
 
+/**
+ * CREATE SURAT KETERANGAN
+ */
 const createsuratketerangan = async (data) => {
-  try {
-    console.log('SERVICE INPUT:', data);
-
-    // ❗ VALIDASI WAJIB
-    if (!data.nim || !data.nama || !data.prodi || !data.bahasa || !data.jenis) {
-      throw new Error('Semua data wajib diisi');
-    }
-
-    // ❗ VALIDASI MAPPING
-    const bahasa = bahasamap[data.bahasa];
-    const jenis = jenismap[data.jenis];
-
-    if (!bahasa) {
-      throw new Error('bahasa tidak valid');
-    }
-
-    if (!jenis) {
-      throw new Error('jenis tidak valid');
-    }
-
-    //  BUILD DATA
-    const surat = {
-      nim: data.nim,
-      nama: data.nama,
-      prodi: data.prodi,
-      bahasa: bahasa,
-      jenis: jenis,
-      tanggal: new Date().toISOString(),
-    };
-
-    console.log('SURAT READY:', surat);
-
-    //  SAVE KE REPOSITORY
-    const result = await repository.save(surat);
-
-    return result;
-  } catch (error) {
-    console.error('SERVICE ERROR:', error.message);
-    throw error;
+  // ===============================
+  // 1. VALIDASI USER ID
+  // ===============================
+  if (!data.userId) {
+    throw errorResponder(errorTypes.UNAUTHORIZED, 'User tidak terautentikasi');
   }
+
+  const user = await usersService.getUser(data.userId);
+
+  if (!user) {
+    throw errorResponder(
+      errorTypes.UNPROCESSABLE_ENTITY,
+      'User tidak ditemukan'
+    );
+  }
+
+  // ===============================
+  // 2. VALIDASI INPUT
+  // ===============================
+  const { nim, nama, prodi, bahasa, jenis } = data;
+
+  if (!nim || !nama || !prodi || !bahasa || !jenis) {
+    throw errorResponder(errorTypes.BAD_REQUEST, 'Semua field wajib diisi');
+  }
+
+  // ===============================
+  // 3. VALIDASI ENUM
+  // ===============================
+  const bahasaResult = bahasaMap[bahasa];
+  const jenisResult = jenisMap[jenis];
+
+  if (!bahasaResult) {
+    throw errorResponder(errorTypes.BAD_REQUEST, 'Bahasa tidak valid');
+  }
+
+  if (!jenisResult) {
+    throw errorResponder(errorTypes.BAD_REQUEST, 'Jenis surat tidak valid');
+  }
+
+  // ===============================
+  // 4. BUILD DATA FINAL
+  // ===============================
+  const surat = {
+    userId: user.id || user._id,
+    nim,
+    nama,
+    prodi,
+    bahasa: bahasaResult,
+    jenis: jenisResult,
+    createdAt: new Date(),
+  };
+
+  // ===============================
+  // 5. SAVE KE DATABASE
+  // ===============================
+  return await repository.save(surat);
 };
 
-const getallsuratketerangan = async () => {
-  try {
-    return await repository.findall();
-  } catch (error) {
-    console.error('SERVICE GETALL ERROR:', error.message);
-    throw error;
+/**
+ * GET ALL SURAT KETERANGAN
+ */
+const getallsuratketerangan = async (user) => {
+  if (!user) {
+    throw errorResponder(errorTypes.UNAUTHORIZED, 'Unauthorized');
   }
+
+  const role = user.role || user.tokenRole;
+
+  if (role === 'dosen' || role === 'admin') {
+    return await repository.findAll();
+  }
+
+  if (role === 'mahasiswa') {
+    return await repository.findByUserId(user.id || user._id);
+  }
+
+  throw errorResponder(errorTypes.FORBIDDEN, 'Akses ditolak');
 };
 
 module.exports = {
   createsuratketerangan,
   getallsuratketerangan,
 };
-//test
