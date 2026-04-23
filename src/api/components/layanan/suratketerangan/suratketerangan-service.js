@@ -72,3 +72,4 @@ module.exports = {
   createsuratketerangan,
   getallsuratketerangan,
 };
+//test
