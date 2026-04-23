@@ -7,6 +7,15 @@ Format untuk semua pengisian post
   "jenis": 1-5
 }
 
+{
+  "userId": "64f1c2a9b1a3c9a123456789",
+  "nim": "535259991",
+  "nama": "Rizki Rafael",
+  "prodi": "Informatika",
+  "bahasa": 1,
+  "jenis": 1
+}
+
 Link :
 Post localhost:5004/api/suratpermohonan
 Post localhost:5004/api/suratketerangan
