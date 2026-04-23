@@ -1,0 +1,27 @@
+const express = require('express');
+
+const kehadiranController = require('./kehadiran-controller');
+const { requireRole } = require('../../middlewares');
+
+const route = express.Router();
+
+module.exports = (app) => {
+  app.use('/kehadiran', route);
+
+  route.get(
+    '/',
+    requireRole('dosen', 'admin'),
+    kehadiranController.getKehadiran
+  );
+  route.get(
+    '/kehadiransaya',
+    requireRole('mahasiswa'),
+    kehadiranController.getKehadiranSaya
+  );
+  route.post('/', requireRole('admin'), kehadiranController.postKehadiran);
+  route.put(
+    '/:kodeMatkul/:emailMahasiswa',
+    requireRole('dosen'),
+    kehadiranController.updateKehadiran
+  );
+};
