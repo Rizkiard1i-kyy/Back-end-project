@@ -18,6 +18,7 @@ const getAllPayments = async (req, res) => {
   }
 };
 
+// search by NIM to get the _id
 const getPaymentByNim = async (req, res) => {
   try {
     const payment = await service.getPaymentByNim(req.params.nim);

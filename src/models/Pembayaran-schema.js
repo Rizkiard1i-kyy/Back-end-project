@@ -5,7 +5,7 @@ const paymentSchema = new mongoose.Schema(
     nim: {
       type: String,
       required: true,
-      unique: true,
+      unique: true, // FIX: added unique constraint to prevent duplicate NIM at DB level
     },
     nama: {
       type: String,
@@ -55,4 +55,9 @@ const paymentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Payment', paymentSchema);
+// FIX: use mongoose.models to prevent OverwriteModelError when
+// models/index.js also tries to call this file
+const Payment =
+  mongoose.models.Payment || mongoose.model('Payment', paymentSchema);
+
+module.exports = Payment;

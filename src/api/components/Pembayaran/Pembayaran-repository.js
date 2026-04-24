@@ -9,6 +9,7 @@ const getAllPayments = async () => {
   return await Payment.find();
 };
 
+// search by NIM (for finding _id)
 const getPaymentByNim = async (nim) => {
   return await Payment.findOne({ nim });
 };

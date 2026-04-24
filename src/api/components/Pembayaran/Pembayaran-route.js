@@ -5,22 +5,22 @@ const { authMiddleware, requireRole } = require('../../middlewares');
 
 router.use(authMiddleware);
 
-// GET all payments — any authenticated user
+// GET all payments
 router.get('/', controller.getAllPayments);
 
-// GET payment by NIM — any authenticated user
+// GET by NIM — useful to find the _id first
 router.get('/nim/:nim', controller.getPaymentByNim);
 
-// GET payment by ID — any authenticated user
+// GET by _id
 router.get('/:id', controller.getPaymentById);
 
-// POST create new payment — admin only
+// POST create — admin only
 router.post('/', requireRole('admin'), controller.createPayment);
 
-// PUT update payment by ID — admin only
+// PUT update by _id — admin only
 router.put('/:id', requireRole('admin'), controller.updatePayment);
 
-// DELETE payment by ID — admin only
+// DELETE by _id — admin only
 router.delete('/:id', requireRole('admin'), controller.deletePayment);
 
 module.exports = router;
