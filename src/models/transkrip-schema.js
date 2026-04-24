@@ -15,16 +15,18 @@ const transkripSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    daftar_nilai: {
-      kode: String,
-      mata_kuliah: String,
-      sks: Number,
-      nilai: String,
-      bobot: Number,
-      mutu: Number,
-    },
+    daftar_nilai: [
+      {
+        kode: String,
+        mata_kuliah: String,
+        sks: Number,
+        nilai: String,
+        bobot: Number,
+        mutu: Number,
+      },
+    ],
   },
-  { timestamps: true },
-  { collection: 'transkrips' }
+  { timestamps: true }
 );
+
 module.exports = mongoose.model('Transkrip', transkripSchema);

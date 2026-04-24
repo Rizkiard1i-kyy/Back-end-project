@@ -1,4 +1,5 @@
 const transkripRepository = require('./Transkrip-repository');
+const { errorResponder, errorTypes } = require('../../../core/errors');
 
 async function getTranskrip(nim) {
   let queryDatabase = {};
@@ -10,15 +11,19 @@ async function getTranskrip(nim) {
 
 async function postTranskrip(newTranskrip) {
   if (!newTranskrip.nim) {
-    throw new Error('NIM wajib diisi!');
+    throw errorResponder(errorTypes.VALIDATION, 'NIM wajib diisi!');
   }
 
   const userExists = await transkripRepository.getTranskrip({
     nim: newTranskrip.nim,
   });
   if (userExists.length > 0) {
-    throw new Error('NIM sudah terdaftar dalam database');
+    throw errorResponder(
+      errorTypes.VALIDATION,
+      'NIM sudah terdaftar dalam database'
+    );
   }
+
   return await transkripRepository.postTranskrip(newTranskrip);
 }
 

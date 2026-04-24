@@ -1,4 +1,5 @@
-const Payment = require('../../../models/payment-schema');
+// FIX: import path now matches the actual schema file name
+const Payment = require('../../../models/Pembayaran-schema');
 
 const createPayment = async (data) => {
   return await Payment.create(data);

@@ -1,6 +1,11 @@
-const repo = require('./payment-repository');
+// FIX: import path now matches the actual repository file name
+const repo = require('./Pembayaran-repository');
 
 const createPayment = async (data) => {
+  if (data.skema === 'TERMIN' && (!data.termin || data.termin.length === 0)) {
+    throw new Error('Skema TERMIN harus memiliki data termin');
+  }
+
   const existing = await repo.getPaymentByNim(data.nim);
   if (existing) {
     throw new Error('Data pembayaran untuk NIM ini sudah ada');

@@ -7,6 +7,8 @@ const kalenderAkademik = require('./components/kalenderAkademik/kalenderAkademik
 const rps = require('./components/RPS/RPS-route');
 const skpi = require('./components/skpi/skpi-route');
 const jadwalKuliah = require('./components/akademic/JadwalKuliah/JadwalKuliah-route');
+const pembayaran = require('./components/Pembayaran/Pembayaran-route');
+const transkrip = require('./components/Transkrip/Transkrip-route');
 
 module.exports = () => {
   const app = express.Router();
@@ -18,5 +20,8 @@ module.exports = () => {
   rps(app);
   skpi(app);
   jadwalKuliah(app);
+  app.use('/pembayaran', pembayaran);
+  transkrip(app);
+
   return app;
 };

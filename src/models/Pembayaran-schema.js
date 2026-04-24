@@ -5,6 +5,7 @@ const paymentSchema = new mongoose.Schema(
     nim: {
       type: String,
       required: true,
+      unique: true,
     },
     nama: {
       type: String,
